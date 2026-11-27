@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CLYTONIC TECH_TKL_MD | Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0b0410;
+            --card-bg: rgba(20, 10, 30, 0.6);
+            --border: rgba(168, 85, 247, 0.3);
+            --primary: #a855f7;
+            --primary-hover: #9333ea;
+            --text: #f8fafc;
+            --muted: #94a3b8;
+            --glow: rgba(168, 85, 247, 0.4);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+        body { background-color: var(--bg); background-image: radial-gradient(circle at 50% 0%, #3b0764 0%, transparent 60%); color: var(--text); min-height: 100vh; display: flex; flex-direction: column; align-items: center; padding: 20px; }
+        .container { width: 100%; max-width: 450px; display: flex; flex-direction: column; gap: 15px; margin-top: 10px; }
+        
+        /* Top URL Saver */
+        .url-saver { background: var(--card-bg); border: 1px solid var(--border); border-radius: 16px; padding: 15px; backdrop-filter: blur(10px); }
+        .url-saver label { display: block; font-size: 0.75rem; font-weight: 700; color: var(--primary); margin-bottom: 8px; letter-spacing: 1px; }
+        .url-input-group { display: flex; gap: 10px; }
+        .url-input-group input { flex: 1; background: #000; border: 1px solid #333; padding: 10px 15px; border-radius: 8px; color: white; outline: none; font-size: 0.85rem; }
+        .url-input-group button { background: var(--primary); color: white; border: none; padding: 0 15px; border-radius: 8px; font-weight: 600; cursor: pointer; }
+        .url-saver p { font-size: 0.75rem; color: var(--muted); margin-top: 8px; }
+
+        /* Profile Header */
+        .profile-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 50px; padding: 10px 20px 10px 10px; display: flex; align-items: center; gap: 15px; backdrop-filter: blur(10px); }
+        .avatar { width: 50px; height: 50px; border-radius: 50%; background: linear-gradient(45deg, #a855f7, #3b82f6); display: flex; justify-content: center; align-items: center; font-size: 1.5rem; font-weight: 800; }
+        .profile-name { font-weight: 700; font-size: 1.1rem; display: flex; align-items: center; gap: 8px; }
+        .profile-dot { width: 8px; height: 8px; background: var(--primary); border-radius: 50%; box-shadow: 0 0 10px var(--primary); }
+        .profile-tag { font-size: 0.7rem; color: var(--primary); background: rgba(168, 85, 247, 0.1); padding: 2px 8px; border-radius: 10px; }
+
+        /* Stats Grid */
+        .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .stats-box { background: var(--card-bg); border: 1px solid var(--border); border-radius: 16px; padding: 15px; text-align: center; }
+        .stats-box h4 { font-size: 0.7rem; color: var(--muted); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 5px; }
+        .stats-box p { font-size: 1.1rem; font-weight: 700; color: white; }
+
+        /* Triple Stats */
+        .triple-stats { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px; }
+        .stat-circle { background: var(--card-bg); border: 1px solid var(--border); border-radius: 20px; padding: 20px 10px; text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+        .stat-circle h3 { font-size: 1.8rem; color: var(--primary); text-shadow: 0 0 15px var(--glow); margin-bottom: 5px; }
+        .stat-circle p { font-size: 0.7rem; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; }
+        .live-sync { color: white; font-size: 0.8rem; font-weight: 600; display: flex; align-items: center; gap: 5px; }
+        .live-dot { width: 8px; height: 8px; background: var(--primary); border-radius: 50%; box-shadow: 0 0 10px var(--primary); animation: pulse 1.5s infinite; }
+
+        /* Pair Now Section */
+        .section-title { display: flex; align-items: center; gap: 10px; margin-top: 10px; }
+        .section-title .bar { width: 4px; height: 20px; background: var(--primary); border-radius: 4px; }
+        .section-title h2 { font-size: 1.2rem; text-transform: uppercase; letter-spacing: 1px; }
+
+        .pair-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 16px; padding: 20px; }
+        .pair-card h3 { font-size: 1rem; margin-bottom: 5px; }
+        .pair-card p { font-size: 0.85rem; color: var(--muted); margin-bottom: 15px; }
+        .pair-input { width: 100%; background: rgba(0,0,0,0.5); border: 1px solid #333; padding: 15px; border-radius: 12px; color: white; font-size: 1rem; outline: none; margin-bottom: 15px; text-align: center; font-weight: 700; }
+        .pair-input:focus { border-color: var(--primary); box-shadow: 0 0 10px var(--glow); }
+        .btn-generate { width: 100%; background: var(--primary); color: white; border: none; padding: 15px; border-radius: 12px; font-size: 1rem; font-weight: 700; cursor: pointer; transition: 0.3s; box-shadow: 0 4px 15px var(--glow); }
+        .btn-generate:hover { background: var(--primary-hover); transform: translateY(-2px); }
+        .btn-generate:active { transform: scale(0.98); }
+
+        /* Recent Pairs */
+        .recent-pairs { margin-top: 10px; }
+        .recent-title { font-size: 0.9rem; color: var(--muted); margin-bottom: 10px; }
+        .empty-state { background: var(--card-bg); border: 1px dashed var(--border); border-radius: 16px; padding: 30px; text-align: center; color: var(--muted); font-size: 1rem; }
+        .empty-state span { color: var(--primary); font-size: 1.2rem; margin-right: 5px; }
+
+        /* Footer */
+        footer { margin-top: 30px; text-align: center; font-size: 0.75rem; color: #555; padding-bottom: 20px; }
+        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.3; } 100% { opacity: 1; } }
+
+        /* Toast */
+        .toast { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%) translateY(100px); background: var(--primary); color: white; padding: 12px 24px; border-radius: 30px; font-weight: 600; box-shadow: 0 10px 30px var(--glow); opacity: 0; transition: 0.3s; z-index: 100; }
+        .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        
+        <!-- BOT RENDER URL SAVER -->
+        <div class="url-saver">
+            <label>BOT RENDER URL</label>
+            <div class="url-input-group">
+                <input type="text" id="renderUrl" placeholder="https://your-bot.onrender.com">
+                <button onclick="saveUrl()">Save</button>
+            </div>
+            <p>This is your bot's Render URL. Pairing requests go here.</p>
+        </div>
+
+        <!-- PROFILE HEADER -->
+        <div class="profile-card">
+            <div class="avatar">C</div>
+            <div>
+                <div class="profile-name"><span class="profile-dot"></span> CLYTONIC TECH <span class="profile-dot"></span></div>
+                <div class="profile-tag">TKL_MD Protocol</div>
+            </div>
+        </div>
+
+        <!-- STATS GRID 1 -->
+        <div class="stats-grid">
+            <div class="stats-box"><h4>IP ADDRESS</h4><p>Fetching...</p></div>
+            <div class="stats-box"><h4>BATTERY</h4><p id="batteryLevel">--%</p></div>
+        </div>
+
+        <!-- STATS GRID 2 -->
+        <div class="triple-stats">
+            <div class="stat-circle"><h3>0</h3><p>Sessions</p></div>
+            <div class="stat-circle"><h3>0</h3><p>Online</p></div>
+            <div class="stat-circle"><div class="live-sync"><div class="live-dot"></div> LIVE SYNC</div></div>
+        </div>
+
+        <!-- PAIR NOW SECTION -->
+        <div class="section-title">
+            <div class="bar"></div>
+            <h2>PAIR NOW</h2>
+        </div>
+
+        <div class="pair-card">
+            <h3>WhatsApp Pairing (Baileys)</h3>
+            <p>Enter your number with country code to get a real WhatsApp pairing code</p>
+            <input type="text" id="phoneInput" class="pair-input" placeholder="263775814192" value="263775814192">
+            <button class="btn-generate" onclick="generateCode()">Generate Pairing Code</button>
+        </div>
+
+        <!-- RECENT PAIRS -->
+        <div class="recent-pairs">
+            <div class="recent-title">Recent Pairs</div>
+            <div class="empty-state" id="recentPairsBox"><span>✨</span> No pairs yet</div>
+        </div>
+
+    </div>
+
+    <footer>clytonic protocol · live mesh · 50+ sessions ready</footer>
+
+    <!-- Toast for Auto Copy -->
+    <div id="toast" class="toast">Code Copied!</div>
+
+    <script>
+        // Load saved Render URL on startup
+        window.onload = function() {
+            const savedUrl = localStorage.getItem('clytonic_render_url');
+            if (savedUrl) {
+                document.getElementById('renderUrl').value = savedUrl;
+            }
+            
+            // Simulate Battery Fetching
+            if (navigator.getBattery) {
+                navigator.getBattery().then(function(battery) {
+                    function updateBatteryInfo() {
+                        document.getElementById('batteryLevel').innerText = `${Math.round(battery.level * 100)}%`;
+                    }
+                    updateBatteryInfo();
+                    battery.addEventListener('levelchange', updateBatteryInfo);
+                });
+            }
+        };
+
+        // Save Render URL to LocalStorage
+        function saveUrl() {
+            const url = document.getElementById('renderUrl').value;
+            localStorage.setItem('clytonic_render_url', url);
+            showToast('Render URL Saved!');
+        }
+
+        // Generate Code Logic (REAL API CONNECTION)
+        async function generateCode() {
+            const phone = document.getElementById('phoneInput').value.trim();
+            
+            if (!phone || phone.length < 10) {
+                alert("Please enter a valid phone number with country code (e.g. 263775814192).");
+                return;
+            }
+
+            const btn = document.querySelector('.btn-generate');
+            const originalText = btn.innerText;
+            btn.innerText = "Generating...";
+            btn.style.opacity = "0.7";
+
+            try {
+                // Send request to the backend API
+                const response = await fetch('/api/pair', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ number: phone })
+                });
+
+                const data = await response.json();
+
+                if (data.code) {
+                    // Auto Copy to Clipboard
+                    navigator.clipboard.writeText(data.code).then(() => {
+                        showToast('Real Code Copied!');
+                    });
+
+                    // Update Recent Pairs Box
+                    const recentBox = document.getElementById('recentPairsBox');
+                    recentBox.innerHTML = `
+                        <div style="text-align: left; background: rgba(0,0,0,0.3); padding: 15px; border-radius: 12px; border: 1px solid var(--primary);">
+                            <p style="font-size: 0.8rem; color: #ccc; margin-bottom: 5px;">+${phone}</p>
+                            <p style="font-size: 1.5rem; font-weight: 800; color: var(--primary); letter-spacing: 2px;">${data.code}</p>
+                            <p style="font-size: 0.75rem; color: #888; margin-top: 5px;">Open WhatsApp > Linked Devices</p>
+                        </div>
+                    `;
+                } else {
+                    alert("Error: " + (data.error || "Failed to get code"));
+                }
+            } catch (error) {
+                alert("Network Error: Could not connect to the bot server. Please wait 10 seconds and try again.");
+            } finally {
+                // Reset Button
+                btn.innerText = originalText;
+                btn.style.opacity = "1";
+            }
+        }
+
+        // Toast Notification
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            toast.innerText = msg;
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
